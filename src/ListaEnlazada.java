@@ -1,11 +1,18 @@
 public class ListaEnlazada {
+    private String nombreDeLaRama;
     private Nodo primerNodo;
+    private ListaEnlazada ramaExtra;
 
     public ListaEnlazada() {
         this.primerNodo = null;
     }
 
-    public void push(Object objeto) {
+    public ListaEnlazada(String nombreDeLaRama, Nodo primerNodo) {
+        this.nombreDeLaRama = nombreDeLaRama;
+        this.primerNodo = primerNodo;
+    }
+
+    public void gitCommit(Object objeto) {
         if (laListaEstaVacia()) {
             this.primerNodo = new Nodo(objeto);
         } else {
@@ -23,9 +30,9 @@ public class ListaEnlazada {
         return primerNodo == null;
     }
 
-    public String obtenerSusObjetos() {
+    public String gitStatus() {
         Nodo auxiliarParaObtenerTodosLosNodos = primerNodo;
-        String auxiliarParaPasarElContenidoDeLosNodos = "[";
+        String auxiliarParaPasarElContenidoDeLosNodos = nombreDeLaRama + "\n[";
         while (auxiliarParaObtenerTodosLosNodos != null) {
             auxiliarParaPasarElContenidoDeLosNodos += auxiliarParaObtenerTodosLosNodos.obtenerObjeto()+", ";
             auxiliarParaObtenerTodosLosNodos = auxiliarParaObtenerTodosLosNodos.obtenerSiguienteNodo();
@@ -38,7 +45,8 @@ public class ListaEnlazada {
         return auxiliarParaPasarElContenidoDeLosNodos;
     }
 
-    public void pop() {
+
+    public void gitRevert() {
         if (primerNodo.obtenerSiguienteNodo() == null || laListaEstaVacia()) {
             shift();
         } else {
@@ -46,11 +54,8 @@ public class ListaEnlazada {
             Nodo auxiliarParaEncontrarElValorAnteriorAlUltimo = primerNodo;
 
             while (auxiliarParaEncontrarElUltimoValor.obtenerSiguienteNodo() != null) {
+                auxiliarParaEncontrarElValorAnteriorAlUltimo = auxiliarParaEncontrarElUltimoValor;
                 auxiliarParaEncontrarElUltimoValor = auxiliarParaEncontrarElUltimoValor.obtenerSiguienteNodo();
-            }
-
-            while (auxiliarParaEncontrarElValorAnteriorAlUltimo.obtenerSiguienteNodo() != auxiliarParaEncontrarElUltimoValor) {
-                auxiliarParaEncontrarElValorAnteriorAlUltimo = auxiliarParaEncontrarElValorAnteriorAlUltimo.obtenerSiguienteNodo();
             }
 
             auxiliarParaEncontrarElValorAnteriorAlUltimo.borrarSiguienteNodo();
@@ -63,7 +68,29 @@ public class ListaEnlazada {
         }
     }
 
+
+
     public void unshift(Object objeto) {
         primerNodo = new Nodo(objeto, primerNodo);
+    }
+
+    public void gitBranch(String nombreDeLaRama, Object objeto) {
+        Nodo auxiliarParaEncontrarElUltimoNodo = primerNodo;
+
+        while (auxiliarParaEncontrarElUltimoNodo.obtenerSiguienteNodo() != null) {
+            auxiliarParaEncontrarElUltimoNodo = auxiliarParaEncontrarElUltimoNodo.obtenerSiguienteNodo();
+        }
+
+        ramaExtra = new ListaEnlazada(nombreDeLaRama, auxiliarParaEncontrarElUltimoNodo.clone());
+        ramaExtra.agregarRama(this);
+        ramaExtra.gitCommit(objeto);
+    }
+
+    private void agregarRama(ListaEnlazada ramaExtra) {
+        this.ramaExtra = ramaExtra;
+    }
+
+    public ListaEnlazada gitCheckout() {
+        return ramaExtra;
     }
 }

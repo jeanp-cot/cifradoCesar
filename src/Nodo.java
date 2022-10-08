@@ -1,6 +1,7 @@
-public class Nodo {
+public class Nodo implements Cloneable{
     private final Object informacionDelNodo;
     private Nodo siguienteNodo;
+
     public Nodo(Object informacionDelNodo, Nodo siguienteNodo) {
         this.informacionDelNodo = informacionDelNodo;
         this.siguienteNodo = siguienteNodo;
@@ -26,4 +27,14 @@ public class Nodo {
         this.siguienteNodo = new Nodo(objeto);
     }
 
+    @Override
+    public Nodo clone() {
+        try {
+            Nodo clone = (Nodo) super.clone();
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            System.out.println("Se cagó todo");
+            throw new AssertionError();
+        }
+    }
 }

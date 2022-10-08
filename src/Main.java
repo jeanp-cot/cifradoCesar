@@ -1,27 +1,38 @@
 public class Main {
     public static void main(String[] args) {
+        //Creamos la rama
+        ListaEnlazada ramaSeleccionada = new ListaEnlazada("Rama Principal", new Nodo(1));
 
-        ListaEnlazada listaEnlazada = new ListaEnlazada();
+        //Realizamos unos commits
+        ramaSeleccionada.gitCommit(2);
+        ramaSeleccionada.gitCommit(3);
+        ramaSeleccionada.gitCommit(4);
 
-        //Agregamos al final de la lista estos valores
-        listaEnlazada.push(1);
-        listaEnlazada.push(2);
-        listaEnlazada.push(3);
-        listaEnlazada.push(4);
+        //Mostramos la rama
+        System.out.println(ramaSeleccionada.gitStatus());
 
-        //Mostramos la lista
-        System.out.println(listaEnlazada.obtenerSusObjetos());
+        //Creamos una rama apartir del ultimo commit
+        ramaSeleccionada.gitBranch("Rama Secundaria",5);
 
-        //Le quita el primer valor de la lista
-        listaEnlazada.shift();
-        System.out.println(listaEnlazada.obtenerSusObjetos());
+        //Mostramos la rama seleccionada para ver que el commit en la rama secundaria solo se encuantra en la secundaria
+        System.out.println(ramaSeleccionada.gitStatus());
 
-        //Le quita el ultimo valor de la lista
-        listaEnlazada.pop();
-        System.out.println(listaEnlazada.obtenerSusObjetos());
+        //Cambiamos de rama
+        ramaSeleccionada = ramaSeleccionada.gitCheckout();
 
-        //Agregamos al inicio un valor a la lista
-        listaEnlazada.unshift(200);
-        System.out.println(listaEnlazada.obtenerSusObjetos());
+        //Mostramos la rama
+        System.out.println(ramaSeleccionada.gitStatus());
+
+        //Borramos el ultimo commit que hicimos en esa rama
+        ramaSeleccionada.gitRevert();
+
+        //Mostramos la rama
+        System.out.println(ramaSeleccionada.gitStatus());
+
+        //Cambiamos de rama
+        ramaSeleccionada = ramaSeleccionada.gitCheckout();
+
+        //Mostramos la rama seleccionada
+        System.out.println(ramaSeleccionada.gitStatus());
     }
 }
