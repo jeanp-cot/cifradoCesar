@@ -1,13 +1,17 @@
+import java.util.ArrayList;
+
 public class ListaEnlazada {
     private String nombreDeLaRama;
     private Nodo primerNodo;
-    private ListaEnlazada ramaExtra;
+    private ArrayList<ListaEnlazada> ramas;
 
     public ListaEnlazada() {
+        this.ramas = new ArrayList<>();
         this.primerNodo = null;
     }
 
     public ListaEnlazada(String nombreDeLaRama, Nodo primerNodo) {
+        this.ramas = new ArrayList<>();
         this.nombreDeLaRama = nombreDeLaRama;
         this.primerNodo = primerNodo;
     }
@@ -30,19 +34,19 @@ public class ListaEnlazada {
         return primerNodo == null;
     }
 
-    public String gitStatus() {
+    public void gitStatus() {
         Nodo auxiliarParaObtenerTodosLosNodos = primerNodo;
         String auxiliarParaPasarElContenidoDeLosNodos = nombreDeLaRama + "\n[";
         while (auxiliarParaObtenerTodosLosNodos != null) {
-            auxiliarParaPasarElContenidoDeLosNodos += auxiliarParaObtenerTodosLosNodos.obtenerObjeto()+", ";
+            auxiliarParaPasarElContenidoDeLosNodos += auxiliarParaObtenerTodosLosNodos.obtenerObjeto().toString() + ", ";
             auxiliarParaObtenerTodosLosNodos = auxiliarParaObtenerTodosLosNodos.obtenerSiguienteNodo();
         }
 
-        auxiliarParaPasarElContenidoDeLosNodos = auxiliarParaPasarElContenidoDeLosNodos.substring(0,Math.abs(auxiliarParaPasarElContenidoDeLosNodos.length()-2));
+        auxiliarParaPasarElContenidoDeLosNodos = auxiliarParaPasarElContenidoDeLosNodos.substring(0, Math.abs(auxiliarParaPasarElContenidoDeLosNodos.length() - 2));
 
         auxiliarParaPasarElContenidoDeLosNodos += "]";
 
-        return auxiliarParaPasarElContenidoDeLosNodos;
+        System.out.println(auxiliarParaPasarElContenidoDeLosNodos);
     }
 
 
@@ -69,7 +73,6 @@ public class ListaEnlazada {
     }
 
 
-
     public void unshift(Object objeto) {
         primerNodo = new Nodo(objeto, primerNodo);
     }
@@ -81,16 +84,38 @@ public class ListaEnlazada {
             auxiliarParaEncontrarElUltimoNodo = auxiliarParaEncontrarElUltimoNodo.obtenerSiguienteNodo();
         }
 
-        ramaExtra = new ListaEnlazada(nombreDeLaRama, auxiliarParaEncontrarElUltimoNodo.clone());
-        ramaExtra.agregarRama(this);
-        ramaExtra.gitCommit(objeto);
+        ListaEnlazada ramaAuxiliar = new ListaEnlazada(nombreDeLaRama, auxiliarParaEncontrarElUltimoNodo.clone());
+        ramaAuxiliar.agregarRama(this);
+        ramaAuxiliar.gitCommit(objeto);
+
+        this.agregarRama(ramaAuxiliar);
     }
 
-    private void agregarRama(ListaEnlazada ramaExtra) {
-        this.ramaExtra = ramaExtra;
+    private void agregarRama(ListaEnlazada ramaNueva) {
+        ramas.add(ramaNueva);
     }
 
-    public ListaEnlazada gitCheckout() {
-        return ramaExtra;
+    public ListaEnlazada gitCheckout(int numeroDeRama) {
+        return ramas.get(numeroDeRama - 1);
+    }
+
+    public void enumerarRamas() {
+        for (int i = 0; i < ramas.size(); i++) {
+            System.out.println("Rama #" + (i + 1) + ": " + ramas.get(i));
+        }
+    }
+
+    @Override
+    public String toString() {
+        return nombreDeLaRama;
+    }
+
+    public void gitMerge(int numeroDeRama) {
+        Nodo nodoAuxiliar = ramas.get(numeroDeRama-1).obtenerPrimerNodo();
+        this.gitCommit(nodoAuxiliar.obtenerSiguienteNodo());
+    }
+
+    private Nodo obtenerPrimerNodo() {
+        return primerNodo;
     }
 }

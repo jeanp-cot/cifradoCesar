@@ -28,6 +28,11 @@ public class Nodo implements Cloneable{
     }
 
     @Override
+    public String toString() {
+        return informacionDelNodo.toString();
+    }
+
+    @Override
     public Nodo clone() {
         try {
             Nodo clone = (Nodo) super.clone();

@@ -9,30 +9,44 @@ public class Main {
         ramaSeleccionada.gitCommit(4);
 
         //Mostramos la rama
-        System.out.println(ramaSeleccionada.gitStatus());
+        ramaSeleccionada.gitStatus();
 
         //Creamos una rama apartir del ultimo commit
         ramaSeleccionada.gitBranch("Rama Secundaria",5);
+        ramaSeleccionada.gitBranch("Rama 3",6);
+        ramaSeleccionada.gitBranch("Rama 4",7);
+        ramaSeleccionada.gitBranch("Rama 5",8);
+
+        ramaSeleccionada.enumerarRamas();
 
         //Mostramos la rama seleccionada para ver que el commit en la rama secundaria solo se encuantra en la secundaria
-        System.out.println(ramaSeleccionada.gitStatus());
+        ramaSeleccionada.gitStatus();
 
         //Cambiamos de rama
-        ramaSeleccionada = ramaSeleccionada.gitCheckout();
+        ramaSeleccionada = ramaSeleccionada.gitCheckout(2);
 
         //Mostramos la rama
-        System.out.println(ramaSeleccionada.gitStatus());
+        ramaSeleccionada.gitStatus();
 
         //Borramos el ultimo commit que hicimos en esa rama
         ramaSeleccionada.gitRevert();
 
         //Mostramos la rama
-        System.out.println(ramaSeleccionada.gitStatus());
+        ramaSeleccionada.gitStatus();
+
+        ramaSeleccionada.enumerarRamas();
 
         //Cambiamos de rama
-        ramaSeleccionada = ramaSeleccionada.gitCheckout();
+        ramaSeleccionada = ramaSeleccionada.gitCheckout(1);
 
         //Mostramos la rama seleccionada
-        System.out.println(ramaSeleccionada.gitStatus());
+        ramaSeleccionada.gitStatus();
+        ramaSeleccionada.enumerarRamas();
+
+        ramaSeleccionada.gitMerge(1);
+
+        ramaSeleccionada.gitStatus();
+
+
     }
 }
