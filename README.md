@@ -14,9 +14,7 @@ Objetivo:
   - git merge: Fusiona una rama dentro de la rama que tienes activa
 3.	Opcional: si manejas git sabrás que estos comandos al ejecutarlos muestran una salida, de ser posible, implementa esta salida cada que ejecutes tu comando
 
-Usé las funciones creadas el dia #9, para guardar las ramas creadas utilicé un ArrayList esto me servía para luego enumerarlas y seleccionar la que quisiera al momento de hacer el merge o checkout (tambien pudo haber servido para borrar las ramas). 
+Usé las funciones creadas el dia #9, para guardar las ramas creadas utilicé una ListaEnlazada esto me servía para luego enumerarlas y seleccionar la que quisiera al momento de hacer el merge o checkout (tambien pudo haber servido para borrar las ramas). 
 El merge fue el comando nuevo que implementé.
 
-
-
-
+También tuve que crear un metodo que pudiera regresarme un nodo en concreto de la ListaEnlazada.
