@@ -1,17 +1,22 @@
-# listaEnlazada
-Ejercicio #8 del #30DaysOfCodeByAEIS
+# sistemaGIT
+Ejercicio #10 del #30DaysOfCodeByAEIS
 
 Lenguaje: Java
 
 Objetivo: 
-1.	🧑‍💻👩‍💻 Implementa una función o bloque que nos permita crear una lista enlazada, es decir, nodos, enlaces, etc. No hagas uso de las funciones propias del lenguaje que estés implementado para el reto.
-2.	Implementa los métodos:
-  a.	push: ingresa un elemento al final de la lista.
-  b.	pop: retira un elemento del final de la lista.
-  c.	shift: remueve un elemento del inicio de la lista
-  d.	unshift: inserta un elemento al inicio de la lista.
-  
-Cree dos clases "ListaEnlazada" y "Nodo" La lista enlazada era para tener los metodos push, pop, shift y unshift. El nodo tenía una informacion y un nodo al que se conectaba.
+1.  Implementar los siguientes metodos:
+  - git commint: Este comando nos permite añadir un elemento a la lista de nuestro repositorio.
+  - git branch: Crear una rama
+  - git checkout: Cambiar de una rama a otra
+  - git status: Mostrar la informacion de los nodos
+  - git revert: Deshace los cambios efectuados en el ultimo nodo
+2.	Consulta sobre git e implementa un comando nuevo, explícanos el funcionamiento en git y el funcionamiento en tu código.
+  - git merge: Fusiona una rama dentro de la rama que tienes activa
+3.	Opcional: si manejas git sabrás que estos comandos al ejecutarlos muestran una salida, de ser posible, implementa esta salida cada que ejecutes tu comando
 
-Para crear el metodo pop tenia que hacer dos busquedas, primero el ultimo nodo y luego buscar el nodo que se conectaba a ese, para poder borrarlo. El metodo shift solo tenia 
-que hacer que el primer nodo fuera el segundo y ya.
+Usé las funciones creadas el dia #9, para guardar las ramas creadas utilicé un ArrayList esto me servía para luego enumerarlas y seleccionar la que quisiera al momento de hacer el merge o checkout (tambien pudo haber servido para borrar las ramas). 
+El merge fue el comando nuevo que implementé.
+
+
+
+
