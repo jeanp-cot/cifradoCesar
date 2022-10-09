@@ -23,9 +23,14 @@ public class Nodo implements Cloneable{
         siguienteNodo =null;
     }
 
-    public void ponerObjeto(Object objeto) {
+    public void colocarSiguienteNodo(Object objeto) {
         this.siguienteNodo = new Nodo(objeto);
     }
+
+    public void colocarSiguienteNodo(Nodo siguienteNodo) {
+        this.siguienteNodo = siguienteNodo;
+    }
+
 
     @Override
     public String toString() {

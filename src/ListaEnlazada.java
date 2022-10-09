@@ -1,17 +1,9 @@
-import java.util.ArrayList;
-
 public class ListaEnlazada {
-    private String nombreDeLaRama;
+    private final String nombreDeLaRama;
     private Nodo primerNodo;
-    private ArrayList<ListaEnlazada> ramas;
-
-    public ListaEnlazada() {
-        this.ramas = new ArrayList<>();
-        this.primerNodo = null;
-    }
+    private ListaEnlazada ramasEnlazadas;
 
     public ListaEnlazada(String nombreDeLaRama, Nodo primerNodo) {
-        this.ramas = new ArrayList<>();
         this.nombreDeLaRama = nombreDeLaRama;
         this.primerNodo = primerNodo;
     }
@@ -26,7 +18,21 @@ public class ListaEnlazada {
                 auxiliarParaEncontrarElUltimoNodo = auxiliarParaEncontrarElUltimoNodo.obtenerSiguienteNodo();
             }
 
-            auxiliarParaEncontrarElUltimoNodo.ponerObjeto(objeto);
+            auxiliarParaEncontrarElUltimoNodo.colocarSiguienteNodo(objeto);
+        }
+    }
+
+    public void gitCommit(Nodo nodo) {
+        if (laListaEstaVacia()) {
+            this.primerNodo = nodo;
+        } else {
+            Nodo auxiliarParaEncontrarElUltimoNodo = primerNodo;
+
+            while (auxiliarParaEncontrarElUltimoNodo.obtenerSiguienteNodo() != null) {
+                auxiliarParaEncontrarElUltimoNodo = auxiliarParaEncontrarElUltimoNodo.obtenerSiguienteNodo();
+            }
+
+            auxiliarParaEncontrarElUltimoNodo.colocarSiguienteNodo(nodo);
         }
     }
 
@@ -36,8 +42,21 @@ public class ListaEnlazada {
 
     public void gitStatus() {
         Nodo auxiliarParaObtenerTodosLosNodos = primerNodo;
-        String auxiliarParaPasarElContenidoDeLosNodos = nombreDeLaRama + "\n[";
+
+        System.out.println(this + ":");
+
         while (auxiliarParaObtenerTodosLosNodos != null) {
+            System.out.printf("[%s]->", auxiliarParaObtenerTodosLosNodos.obtenerObjeto());
+            auxiliarParaObtenerTodosLosNodos = auxiliarParaObtenerTodosLosNodos.obtenerSiguienteNodo();
+        }
+
+        System.out.println('\n');
+
+        /*
+        Codigo que usaba antes por no saber formatos XDDDDDDDDDDDDDDD
+
+        while (auxiliarParaObtenerTodosLosNodos != null) {
+            System.out.printf("[%s]->",auxiliarParaObtenerTodosLosNodos.obtenerObjeto());
             auxiliarParaPasarElContenidoDeLosNodos += auxiliarParaObtenerTodosLosNodos.obtenerObjeto().toString() + ", ";
             auxiliarParaObtenerTodosLosNodos = auxiliarParaObtenerTodosLosNodos.obtenerSiguienteNodo();
         }
@@ -46,7 +65,7 @@ public class ListaEnlazada {
 
         auxiliarParaPasarElContenidoDeLosNodos += "]";
 
-        System.out.println(auxiliarParaPasarElContenidoDeLosNodos);
+        System.out.println(auxiliarParaPasarElContenidoDeLosNodos);*/
     }
 
 
@@ -85,24 +104,60 @@ public class ListaEnlazada {
         }
 
         ListaEnlazada ramaAuxiliar = new ListaEnlazada(nombreDeLaRama, auxiliarParaEncontrarElUltimoNodo.clone());
+        ramaAuxiliar.gitCommit(objeto);
+        ramaAuxiliar.gitBranch(this);
+
+        if (ramasEnlazadas == null) {
+            ramasEnlazadas = new ListaEnlazada("Ramas de la rama " + this, new Nodo(ramaAuxiliar));
+        } else {
+            ramasEnlazadas.gitCommit(ramaAuxiliar);
+        }
+
+
+
+        /*ListaEnlazada ramaAuxiliar = new ListaEnlazada(nombreDeLaRama, auxiliarParaEncontrarElUltimoNodo.clone());
         ramaAuxiliar.agregarRama(this);
         ramaAuxiliar.gitCommit(objeto);
 
-        this.agregarRama(ramaAuxiliar);
+        this.agregarRama(ramaAuxiliar);*/
     }
 
-    private void agregarRama(ListaEnlazada ramaNueva) {
-        ramas.add(ramaNueva);
+    private void gitBranch(ListaEnlazada listaEnlazada) {
+        if (ramasEnlazadas == null) {
+            ramasEnlazadas = new ListaEnlazada("Ramas de la " + this, new Nodo(listaEnlazada));
+        } else {
+            ramasEnlazadas.gitCommit(listaEnlazada);
+        }
     }
+
+    /*private void agregarRama(ListaEnlazada ramaNueva) {
+        ramasEnlazadas = new ListaEnlazada(ramaNueva);
+    }*/
 
     public ListaEnlazada gitCheckout(int numeroDeRama) {
-        return ramas.get(numeroDeRama - 1);
+        System.out.println("La rama seleccionada es: " + ramasEnlazadas.obtenerInformacionDelCommit(numeroDeRama - 1));
+        return (ListaEnlazada) ramasEnlazadas.obtenerInformacionDelCommit(numeroDeRama - 1);
+    }
+
+    private Object obtenerInformacionDelCommit(int posicionDelCommitEnLaRama) {
+        Nodo auxiliarParaEncontrarNodo = primerNodo;
+        for (int i = 0; i < posicionDelCommitEnLaRama; i++) {
+            auxiliarParaEncontrarNodo = auxiliarParaEncontrarNodo.obtenerSiguienteNodo();
+        }
+        return auxiliarParaEncontrarNodo.obtenerObjeto();
     }
 
     public void enumerarRamas() {
-        for (int i = 0; i < ramas.size(); i++) {
-            System.out.println("Rama #" + (i + 1) + ": " + ramas.get(i));
+        Nodo auxiliarParaMostrarTodasLasRamas = ramasEnlazadas.primerNodo;
+        int contador = 1;
+        System.out.println(ramasEnlazadas + ":");
+        while (auxiliarParaMostrarTodasLasRamas != null) {
+            //System.out.println("Rama #" + contador++ + ": " + ((ListaEnlazada) auxiliarParaMostrarTodasLasRamas.obtenerObjeto()).gitStatus();
+            System.out.printf("\t#%s %s\n", contador++,auxiliarParaMostrarTodasLasRamas.obtenerObjeto());
+            //System.out.println(auxiliarParaMostrarTodasLasRamas.obtenerObjeto());
+            auxiliarParaMostrarTodasLasRamas = auxiliarParaMostrarTodasLasRamas.obtenerSiguienteNodo();
         }
+        System.out.print('\n');
     }
 
     @Override
@@ -111,11 +166,10 @@ public class ListaEnlazada {
     }
 
     public void gitMerge(int numeroDeRama) {
-        Nodo nodoAuxiliar = ramas.get(numeroDeRama-1).obtenerPrimerNodo();
-        this.gitCommit(nodoAuxiliar.obtenerSiguienteNodo());
-    }
+        System.out.println("La rama seleccionada es: ");
+        ((ListaEnlazada) ramasEnlazadas.obtenerInformacionDelCommit(numeroDeRama - 1)).gitStatus();
+        Nodo nodoAuxiliar = ((ListaEnlazada) ramasEnlazadas.obtenerInformacionDelCommit(numeroDeRama - 1)).primerNodo;
 
-    private Nodo obtenerPrimerNodo() {
-        return primerNodo;
+        gitCommit(nodoAuxiliar.obtenerSiguienteNodo());
     }
 }

@@ -2,11 +2,10 @@ public class Main {
     public static void main(String[] args) {
         //Creamos la rama
         ListaEnlazada ramaSeleccionada = new ListaEnlazada("Rama Principal", new Nodo(1));
-
         //Realizamos unos commits
-        ramaSeleccionada.gitCommit(2);
-        ramaSeleccionada.gitCommit(3);
-        ramaSeleccionada.gitCommit(4);
+        ramaSeleccionada.gitCommit(new Nodo(2));
+        ramaSeleccionada.gitCommit(new Nodo(3));
+        ramaSeleccionada.gitCommit(new Nodo(4));
 
         //Mostramos la rama
         ramaSeleccionada.gitStatus();
@@ -23,7 +22,10 @@ public class Main {
         ramaSeleccionada.gitStatus();
 
         //Cambiamos de rama
-        ramaSeleccionada = ramaSeleccionada.gitCheckout(2);
+        ramaSeleccionada = ramaSeleccionada.gitCheckout(1);
+        ramaSeleccionada.gitCommit(2);
+        ramaSeleccionada.gitCommit(2);
+        ramaSeleccionada.gitCommit(2);
 
         //Mostramos la rama
         ramaSeleccionada.gitStatus();
@@ -34,10 +36,12 @@ public class Main {
         //Mostramos la rama
         ramaSeleccionada.gitStatus();
 
+
         ramaSeleccionada.enumerarRamas();
 
         //Cambiamos de rama
         ramaSeleccionada = ramaSeleccionada.gitCheckout(1);
+
 
         //Mostramos la rama seleccionada
         ramaSeleccionada.gitStatus();
@@ -46,7 +50,5 @@ public class Main {
         ramaSeleccionada.gitMerge(1);
 
         ramaSeleccionada.gitStatus();
-
-
     }
 }

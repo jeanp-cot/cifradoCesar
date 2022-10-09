@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="894f1662-2524-4f7a-aaae-5a96e0db6b8f" name="Changes" comment="Trabajo">
-      <change afterPath="$PROJECT_DIR$/src/Opcion.java" afterDir="false" />
+    <list default="true" id="894f1662-2524-4f7a-aaae-5a96e0db6b8f" name="Changes" comment="Trabajo actualizado">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ListaEnlazada.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ListaEnlazada.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
@@ -38,7 +37,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/jeanp/Desktop/Jean Pierre Cotera Alcivar/2DO semestre/Programacion_II/ProyAjedrez",
+    "last_opened_file_path": "C:/Users/jeanp/Desktop/Universidad/Programacion_II/30DayOfCode/distribuidorDeHoras",
     "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
@@ -71,7 +70,8 @@
       <updated>1664976815015</updated>
       <workItem from="1664976817286" duration="5680000" />
       <workItem from="1664997639046" duration="8262000" />
-      <workItem from="1665191549517" duration="7137000" />
+      <workItem from="1665191549517" duration="7598000" />
+      <workItem from="1665282111220" duration="7367000" />
     </task>
     <task id="LOCAL-00001" summary="Trabajo">
       <created>1665195327463</created>
@@ -80,7 +80,14 @@
       <option name="project" value="LOCAL" />
       <updated>1665195327463</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Trabajo actualizado">
+      <created>1665198945893</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1665198945893</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -99,6 +106,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Trabajo" />
-    <option name="LAST_COMMIT_MESSAGE" value="Trabajo" />
+    <MESSAGE value="Trabajo actualizado" />
+    <option name="LAST_COMMIT_MESSAGE" value="Trabajo actualizado" />
   </component>
 </project>
