@@ -1,7 +1,12 @@
+import Errores.ListaSinNodos;
+
 public class ListaEnlazada {
     private final String nombreDeLaRama;
     private Nodo primerNodo;
     private ListaEnlazada ramasEnlazadas;
+    public ListaEnlazada(String nombreDeLaRama) {
+        this.nombreDeLaRama = nombreDeLaRama;
+    }
 
     public ListaEnlazada(String nombreDeLaRama, Nodo primerNodo) {
         this.nombreDeLaRama = nombreDeLaRama;
@@ -18,7 +23,9 @@ public class ListaEnlazada {
                 auxiliarParaEncontrarElUltimoNodo = auxiliarParaEncontrarElUltimoNodo.obtenerSiguienteNodo();
             }
 
-            auxiliarParaEncontrarElUltimoNodo.colocarSiguienteNodo(objeto);
+            auxiliarParaEncontrarElUltimoNodo.colocarSiguienteNodo(new Nodo(objeto));
+
+            //auxiliarParaEncontrarElUltimoNodo.colocarSiguienteNodo(objeto);
         }
     }
 
@@ -40,7 +47,11 @@ public class ListaEnlazada {
         return primerNodo == null;
     }
 
-    public void gitStatus() {
+    public void gitStatus() throws ListaSinNodos {
+
+        if (primerNodo == null){
+            throw new ListaSinNodos("Esta rama no tiene ningun commit");
+        }
         Nodo auxiliarParaObtenerTodosLosNodos = primerNodo;
 
         System.out.println(this + ":");
@@ -56,7 +67,6 @@ public class ListaEnlazada {
         Codigo que usaba antes por no saber formatos XDDDDDDDDDDDDDDD
 
         while (auxiliarParaObtenerTodosLosNodos != null) {
-            System.out.printf("[%s]->",auxiliarParaObtenerTodosLosNodos.obtenerObjeto());
             auxiliarParaPasarElContenidoDeLosNodos += auxiliarParaObtenerTodosLosNodos.obtenerObjeto().toString() + ", ";
             auxiliarParaObtenerTodosLosNodos = auxiliarParaObtenerTodosLosNodos.obtenerSiguienteNodo();
         }
@@ -113,8 +123,6 @@ public class ListaEnlazada {
             ramasEnlazadas.gitCommit(ramaAuxiliar);
         }
 
-
-
         /*ListaEnlazada ramaAuxiliar = new ListaEnlazada(nombreDeLaRama, auxiliarParaEncontrarElUltimoNodo.clone());
         ramaAuxiliar.agregarRama(this);
         ramaAuxiliar.gitCommit(objeto);
@@ -122,7 +130,10 @@ public class ListaEnlazada {
         this.agregarRama(ramaAuxiliar);*/
     }
 
-    private void gitBranch(ListaEnlazada listaEnlazada) {
+    public void gitBranch(ListaEnlazada listaEnlazada) {
+        listaEnlazada.gitCommit(obtenerUltimoNodo().clone());
+        listaEnlazada.colocarRamaMaestra(this);
+
         if (ramasEnlazadas == null) {
             ramasEnlazadas = new ListaEnlazada("Ramas de la " + this, new Nodo(listaEnlazada));
         } else {
@@ -130,30 +141,48 @@ public class ListaEnlazada {
         }
     }
 
-    /*private void agregarRama(ListaEnlazada ramaNueva) {
-        ramasEnlazadas = new ListaEnlazada(ramaNueva);
-    }*/
+    private void colocarRamaMaestra(ListaEnlazada listaEnlazada) {
+        ramasEnlazadas = new ListaEnlazada("Ramas de la " + this, new Nodo(listaEnlazada));
+    }
+
+    private Nodo obtenerUltimoNodo() {
+        Nodo auxiliarParaEncontrarElUltimoNodo = primerNodo;
+
+        while (auxiliarParaEncontrarElUltimoNodo.obtenerSiguienteNodo() != null) {
+            auxiliarParaEncontrarElUltimoNodo = auxiliarParaEncontrarElUltimoNodo.obtenerSiguienteNodo();
+        }
+
+        return auxiliarParaEncontrarElUltimoNodo;
+    }
+
 
     public ListaEnlazada gitCheckout(int numeroDeRama) {
         System.out.println("La rama seleccionada es: " + ramasEnlazadas.obtenerInformacionDelCommit(numeroDeRama - 1));
         return (ListaEnlazada) ramasEnlazadas.obtenerInformacionDelCommit(numeroDeRama - 1);
     }
 
-    private Object obtenerInformacionDelCommit(int posicionDelCommitEnLaRama) {
+    private Object obtenerInformacionDelCommit (int posicionDelCommitEnLaRama)throws NullPointerException {
         Nodo auxiliarParaEncontrarNodo = primerNodo;
         for (int i = 0; i < posicionDelCommitEnLaRama; i++) {
+            if (auxiliarParaEncontrarNodo == null){
+                throw new NullPointerException("No existe ese nodo");
+            }
             auxiliarParaEncontrarNodo = auxiliarParaEncontrarNodo.obtenerSiguienteNodo();
         }
         return auxiliarParaEncontrarNodo.obtenerObjeto();
     }
 
-    public void enumerarRamas() {
+    public void enumerarRamas() throws ListaSinNodos {
+        if (ramasEnlazadas == null){
+            throw new ListaSinNodos("Esta rama no tiene otras ramas");
+        }
+
         Nodo auxiliarParaMostrarTodasLasRamas = ramasEnlazadas.primerNodo;
         int contador = 1;
         System.out.println(ramasEnlazadas + ":");
         while (auxiliarParaMostrarTodasLasRamas != null) {
             //System.out.println("Rama #" + contador++ + ": " + ((ListaEnlazada) auxiliarParaMostrarTodasLasRamas.obtenerObjeto()).gitStatus();
-            System.out.printf("\t#%s %s\n", contador++,auxiliarParaMostrarTodasLasRamas.obtenerObjeto());
+            System.out.printf("\tRama #%s: %s\n", contador++,auxiliarParaMostrarTodasLasRamas.obtenerObjeto());
             //System.out.println(auxiliarParaMostrarTodasLasRamas.obtenerObjeto());
             auxiliarParaMostrarTodasLasRamas = auxiliarParaMostrarTodasLasRamas.obtenerSiguienteNodo();
         }
@@ -165,7 +194,7 @@ public class ListaEnlazada {
         return nombreDeLaRama;
     }
 
-    public void gitMerge(int numeroDeRama) {
+    public void gitMerge(int numeroDeRama) throws ListaSinNodos, NullPointerException {
         System.out.println("La rama seleccionada es: ");
         ((ListaEnlazada) ramasEnlazadas.obtenerInformacionDelCommit(numeroDeRama - 1)).gitStatus();
         Nodo nodoAuxiliar = ((ListaEnlazada) ramasEnlazadas.obtenerInformacionDelCommit(numeroDeRama - 1)).primerNodo;

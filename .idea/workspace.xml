@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="894f1662-2524-4f7a-aaae-5a96e0db6b8f" name="Changes" comment="Trabajo actualizado">
+      <change afterPath="$PROJECT_DIR$/src/Errores/ListaSinNodos.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ListaEnlazada.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ListaEnlazada.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Nodo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Nodo.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,8 +15,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Enum" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -37,12 +37,13 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/jeanp/Desktop/Universidad/Programacion_II/30DayOfCode/distribuidorDeHoras",
+    "last_opened_file_path": "C:/Users/jeanp/Desktop/Jean Pierre Cotera Alcivar/2DO semestre/Programacion_II/ProyGUI",
     "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
+      <recent name="Errores" />
       <recent name="" />
     </key>
   </component>
@@ -71,7 +72,8 @@
       <workItem from="1664976817286" duration="5680000" />
       <workItem from="1664997639046" duration="8262000" />
       <workItem from="1665191549517" duration="7598000" />
-      <workItem from="1665282111220" duration="7367000" />
+      <workItem from="1665282111220" duration="8053000" />
+      <workItem from="1665332716870" duration="6625000" />
     </task>
     <task id="LOCAL-00001" summary="Trabajo">
       <created>1665195327463</created>
@@ -87,7 +89,14 @@
       <option name="project" value="LOCAL" />
       <updated>1665198945893</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Trabajo actualizado">
+      <created>1665290455130</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1665290455130</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

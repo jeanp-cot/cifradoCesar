@@ -1,0 +1,351 @@
+Index: src/Main.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>public class Main {\r\n    public static void main(String[] args) {\r\n        //Creamos la rama\r\n        ListaEnlazada ramaSeleccionada = new ListaEnlazada(\"Rama Principal\", new Nodo(1));\r\n        //Realizamos unos commits\r\n        ramaSeleccionada.gitCommit(new Nodo(2));\r\n        ramaSeleccionada.gitCommit(new Nodo(3));\r\n        ramaSeleccionada.gitCommit(new Nodo(4));\r\n\r\n        //Mostramos la rama\r\n        ramaSeleccionada.gitStatus();\r\n\r\n        //Creamos una rama apartir del ultimo commit\r\n        ramaSeleccionada.gitBranch(\"Rama Secundaria\",5);\r\n        ramaSeleccionada.gitBranch(\"Rama 3\",6);\r\n        ramaSeleccionada.gitBranch(\"Rama 4\",7);\r\n        ramaSeleccionada.gitBranch(\"Rama 5\",8);\r\n\r\n        ramaSeleccionada.enumerarRamas();\r\n\r\n        //Mostramos la rama seleccionada para ver que el commit en la rama secundaria solo se encuantra en la secundaria\r\n        ramaSeleccionada.gitStatus();\r\n\r\n        //Cambiamos de rama\r\n        ramaSeleccionada = ramaSeleccionada.gitCheckout(1);\r\n        ramaSeleccionada.gitCommit(2);\r\n        ramaSeleccionada.gitCommit(2);\r\n        ramaSeleccionada.gitCommit(2);\r\n\r\n        //Mostramos la rama\r\n        ramaSeleccionada.gitStatus();\r\n\r\n        //Borramos el ultimo commit que hicimos en esa rama\r\n        ramaSeleccionada.gitRevert();\r\n\r\n        //Mostramos la rama\r\n        ramaSeleccionada.gitStatus();\r\n\r\n\r\n        ramaSeleccionada.enumerarRamas();\r\n\r\n        //Cambiamos de rama\r\n        ramaSeleccionada = ramaSeleccionada.gitCheckout(1);\r\n\r\n\r\n        //Mostramos la rama seleccionada\r\n        ramaSeleccionada.gitStatus();\r\n        ramaSeleccionada.enumerarRamas();\r\n\r\n        ramaSeleccionada.gitMerge(1);\r\n\r\n        ramaSeleccionada.gitStatus();\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/Main.java b/src/Main.java
+--- a/src/Main.java	(revision def575e22c9fc248433d2b41fff56b56957abb9c)
++++ b/src/Main.java	(date 1665340893063)
+@@ -1,54 +1,74 @@
++import Errores.ListaSinNodos;
++
+ public class Main {
+     public static void main(String[] args) {
+-        //Creamos la rama
+-        ListaEnlazada ramaSeleccionada = new ListaEnlazada("Rama Principal", new Nodo(1));
+-        //Realizamos unos commits
+-        ramaSeleccionada.gitCommit(new Nodo(2));
+-        ramaSeleccionada.gitCommit(new Nodo(3));
+-        ramaSeleccionada.gitCommit(new Nodo(4));
++        //Creamos la rama principal
++        ListaEnlazada ramaActiva = new ListaEnlazada("Rama Principal");
++        try {
++            //Mostramos que la rama esta vacia
++            ramaActiva.gitStatus();
++        } catch (ListaSinNodos error) {
++            System.out.println(error.getMessage());
++        }
++
++        try {
++            //Hacemos el primer commit
++            ramaActiva.gitCommit(1);
+ 
+-        //Mostramos la rama
+-        ramaSeleccionada.gitStatus();
++            //Mostramos la rama con sus nodos
++            ramaActiva.gitStatus();
+ 
+-        //Creamos una rama apartir del ultimo commit
+-        ramaSeleccionada.gitBranch("Rama Secundaria",5);
+-        ramaSeleccionada.gitBranch("Rama 3",6);
+-        ramaSeleccionada.gitBranch("Rama 4",7);
+-        ramaSeleccionada.gitBranch("Rama 5",8);
++            //Creamos varios commits
++            ramaActiva.gitCommit(2);
++            ramaActiva.gitCommit(3);
++            ramaActiva.gitCommit(4);
+ 
+-        ramaSeleccionada.enumerarRamas();
++            //Mostramos los nuevos commits
++            ramaActiva.gitStatus();
+ 
+-        //Mostramos la rama seleccionada para ver que el commit en la rama secundaria solo se encuantra en la secundaria
+-        ramaSeleccionada.gitStatus();
++            //Creamos una rama
++            ramaActiva.gitBranch(new ListaEnlazada("Rama 2"));
+ 
+-        //Cambiamos de rama
+-        ramaSeleccionada = ramaSeleccionada.gitCheckout(1);
+-        ramaSeleccionada.gitCommit(2);
+-        ramaSeleccionada.gitCommit(2);
+-        ramaSeleccionada.gitCommit(2);
++            //Enumeramos las ramas
++            ramaActiva.enumerarRamas();
+ 
+-        //Mostramos la rama
+-        ramaSeleccionada.gitStatus();
++            //Seleccionamos otra rama
++            ramaActiva = ramaActiva.gitCheckout(1);
+ 
+-        //Borramos el ultimo commit que hicimos en esa rama
+-        ramaSeleccionada.gitRevert();
++            //Mostramos los commits de la nueva rama
++            ramaActiva.gitStatus();
+ 
+-        //Mostramos la rama
+-        ramaSeleccionada.gitStatus();
++            //Creamos un commit en la nueva rama
++            ramaActiva.gitCommit(5);
++            ramaActiva.gitCommit(6);
+ 
++            //Mostramos como el commit se guardo correctamente
++            ramaActiva.gitStatus();
+ 
+-        ramaSeleccionada.enumerarRamas();
++            //Quitamos el ultimo commit
++            ramaActiva.gitRevert();
+ 
+-        //Cambiamos de rama
+-        ramaSeleccionada = ramaSeleccionada.gitCheckout(1);
++            //Mostramos como se borro el ultimo commit
++            ramaActiva.gitStatus();
+ 
++            //Mostramos que podemos regresar a la anterior rama
++            ramaActiva.enumerarRamas();
+ 
+-        //Mostramos la rama seleccionada
+-        ramaSeleccionada.gitStatus();
+-        ramaSeleccionada.enumerarRamas();
++            //Seleccionamos la otra rama
++            ramaActiva = ramaActiva.gitCheckout(1);
+ 
+-        ramaSeleccionada.gitMerge(1);
++            //Mostramos que es la rama anterior
++            ramaActiva.gitStatus();
+ 
+-        ramaSeleccionada.gitStatus();
++            //Nuevo comando: gitMerge
++            ramaActiva.gitMerge(1);
++
++            ramaActiva.gitStatus();
++
++
++        }catch (ListaSinNodos | NullPointerException error) {
++            System.out.println(error.getMessage());
++        }
++
+     }
+ }
+\ No newline at end of file
+Index: src/ListaEnlazada.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>public class ListaEnlazada {\r\n    private final String nombreDeLaRama;\r\n    private Nodo primerNodo;\r\n    private ListaEnlazada ramasEnlazadas;\r\n\r\n    public ListaEnlazada(String nombreDeLaRama, Nodo primerNodo) {\r\n        this.nombreDeLaRama = nombreDeLaRama;\r\n        this.primerNodo = primerNodo;\r\n    }\r\n\r\n    public void gitCommit(Object objeto) {\r\n        if (laListaEstaVacia()) {\r\n            this.primerNodo = new Nodo(objeto);\r\n        } else {\r\n            Nodo auxiliarParaEncontrarElUltimoNodo = primerNodo;\r\n\r\n            while (auxiliarParaEncontrarElUltimoNodo.obtenerSiguienteNodo() != null) {\r\n                auxiliarParaEncontrarElUltimoNodo = auxiliarParaEncontrarElUltimoNodo.obtenerSiguienteNodo();\r\n            }\r\n\r\n            auxiliarParaEncontrarElUltimoNodo.colocarSiguienteNodo(objeto);\r\n        }\r\n    }\r\n\r\n    public void gitCommit(Nodo nodo) {\r\n        if (laListaEstaVacia()) {\r\n            this.primerNodo = nodo;\r\n        } else {\r\n            Nodo auxiliarParaEncontrarElUltimoNodo = primerNodo;\r\n\r\n            while (auxiliarParaEncontrarElUltimoNodo.obtenerSiguienteNodo() != null) {\r\n                auxiliarParaEncontrarElUltimoNodo = auxiliarParaEncontrarElUltimoNodo.obtenerSiguienteNodo();\r\n            }\r\n\r\n            auxiliarParaEncontrarElUltimoNodo.colocarSiguienteNodo(nodo);\r\n        }\r\n    }\r\n\r\n    private boolean laListaEstaVacia() {\r\n        return primerNodo == null;\r\n    }\r\n\r\n    public void gitStatus() {\r\n        Nodo auxiliarParaObtenerTodosLosNodos = primerNodo;\r\n\r\n        System.out.println(this + \":\");\r\n\r\n        while (auxiliarParaObtenerTodosLosNodos != null) {\r\n            System.out.printf(\"[%s]->\", auxiliarParaObtenerTodosLosNodos.obtenerObjeto());\r\n            auxiliarParaObtenerTodosLosNodos = auxiliarParaObtenerTodosLosNodos.obtenerSiguienteNodo();\r\n        }\r\n\r\n        System.out.println('\\n');\r\n\r\n        /*\r\n        Codigo que usaba antes por no saber formatos XDDDDDDDDDDDDDDD\r\n\r\n        while (auxiliarParaObtenerTodosLosNodos != null) {\r\n            System.out.printf(\"[%s]->\",auxiliarParaObtenerTodosLosNodos.obtenerObjeto());\r\n            auxiliarParaPasarElContenidoDeLosNodos += auxiliarParaObtenerTodosLosNodos.obtenerObjeto().toString() + \", \";\r\n            auxiliarParaObtenerTodosLosNodos = auxiliarParaObtenerTodosLosNodos.obtenerSiguienteNodo();\r\n        }\r\n\r\n        auxiliarParaPasarElContenidoDeLosNodos = auxiliarParaPasarElContenidoDeLosNodos.substring(0, Math.abs(auxiliarParaPasarElContenidoDeLosNodos.length() - 2));\r\n\r\n        auxiliarParaPasarElContenidoDeLosNodos += \"]\";\r\n\r\n        System.out.println(auxiliarParaPasarElContenidoDeLosNodos);*/\r\n    }\r\n\r\n\r\n    public void gitRevert() {\r\n        if (primerNodo.obtenerSiguienteNodo() == null || laListaEstaVacia()) {\r\n            shift();\r\n        } else {\r\n            Nodo auxiliarParaEncontrarElUltimoValor = primerNodo;\r\n            Nodo auxiliarParaEncontrarElValorAnteriorAlUltimo = primerNodo;\r\n\r\n            while (auxiliarParaEncontrarElUltimoValor.obtenerSiguienteNodo() != null) {\r\n                auxiliarParaEncontrarElValorAnteriorAlUltimo = auxiliarParaEncontrarElUltimoValor;\r\n                auxiliarParaEncontrarElUltimoValor = auxiliarParaEncontrarElUltimoValor.obtenerSiguienteNodo();\r\n            }\r\n\r\n            auxiliarParaEncontrarElValorAnteriorAlUltimo.borrarSiguienteNodo();\r\n        }\r\n    }\r\n\r\n    public void shift() {\r\n        if (!laListaEstaVacia()) {\r\n            primerNodo = primerNodo.obtenerSiguienteNodo();\r\n        }\r\n    }\r\n\r\n\r\n    public void unshift(Object objeto) {\r\n        primerNodo = new Nodo(objeto, primerNodo);\r\n    }\r\n\r\n    public void gitBranch(String nombreDeLaRama, Object objeto) {\r\n        Nodo auxiliarParaEncontrarElUltimoNodo = primerNodo;\r\n\r\n        while (auxiliarParaEncontrarElUltimoNodo.obtenerSiguienteNodo() != null) {\r\n            auxiliarParaEncontrarElUltimoNodo = auxiliarParaEncontrarElUltimoNodo.obtenerSiguienteNodo();\r\n        }\r\n\r\n        ListaEnlazada ramaAuxiliar = new ListaEnlazada(nombreDeLaRama, auxiliarParaEncontrarElUltimoNodo.clone());\r\n        ramaAuxiliar.gitCommit(objeto);\r\n        ramaAuxiliar.gitBranch(this);\r\n\r\n        if (ramasEnlazadas == null) {\r\n            ramasEnlazadas = new ListaEnlazada(\"Ramas de la rama \" + this, new Nodo(ramaAuxiliar));\r\n        } else {\r\n            ramasEnlazadas.gitCommit(ramaAuxiliar);\r\n        }\r\n\r\n\r\n\r\n        /*ListaEnlazada ramaAuxiliar = new ListaEnlazada(nombreDeLaRama, auxiliarParaEncontrarElUltimoNodo.clone());\r\n        ramaAuxiliar.agregarRama(this);\r\n        ramaAuxiliar.gitCommit(objeto);\r\n\r\n        this.agregarRama(ramaAuxiliar);*/\r\n    }\r\n\r\n    private void gitBranch(ListaEnlazada listaEnlazada) {\r\n        if (ramasEnlazadas == null) {\r\n            ramasEnlazadas = new ListaEnlazada(\"Ramas de la \" + this, new Nodo(listaEnlazada));\r\n        } else {\r\n            ramasEnlazadas.gitCommit(listaEnlazada);\r\n        }\r\n    }\r\n\r\n    /*private void agregarRama(ListaEnlazada ramaNueva) {\r\n        ramasEnlazadas = new ListaEnlazada(ramaNueva);\r\n    }*/\r\n\r\n    public ListaEnlazada gitCheckout(int numeroDeRama) {\r\n        System.out.println(\"La rama seleccionada es: \" + ramasEnlazadas.obtenerInformacionDelCommit(numeroDeRama - 1));\r\n        return (ListaEnlazada) ramasEnlazadas.obtenerInformacionDelCommit(numeroDeRama - 1);\r\n    }\r\n\r\n    private Object obtenerInformacionDelCommit(int posicionDelCommitEnLaRama) {\r\n        Nodo auxiliarParaEncontrarNodo = primerNodo;\r\n        for (int i = 0; i < posicionDelCommitEnLaRama; i++) {\r\n            auxiliarParaEncontrarNodo = auxiliarParaEncontrarNodo.obtenerSiguienteNodo();\r\n        }\r\n        return auxiliarParaEncontrarNodo.obtenerObjeto();\r\n    }\r\n\r\n    public void enumerarRamas() {\r\n        Nodo auxiliarParaMostrarTodasLasRamas = ramasEnlazadas.primerNodo;\r\n        int contador = 1;\r\n        System.out.println(ramasEnlazadas + \":\");\r\n        while (auxiliarParaMostrarTodasLasRamas != null) {\r\n            //System.out.println(\"Rama #\" + contador++ + \": \" + ((ListaEnlazada) auxiliarParaMostrarTodasLasRamas.obtenerObjeto()).gitStatus();\r\n            System.out.printf(\"\\t#%s %s\\n\", contador++,auxiliarParaMostrarTodasLasRamas.obtenerObjeto());\r\n            //System.out.println(auxiliarParaMostrarTodasLasRamas.obtenerObjeto());\r\n            auxiliarParaMostrarTodasLasRamas = auxiliarParaMostrarTodasLasRamas.obtenerSiguienteNodo();\r\n        }\r\n        System.out.print('\\n');\r\n    }\r\n\r\n    @Override\r\n    public String toString() {\r\n        return nombreDeLaRama;\r\n    }\r\n\r\n    public void gitMerge(int numeroDeRama) {\r\n        System.out.println(\"La rama seleccionada es: \");\r\n        ((ListaEnlazada) ramasEnlazadas.obtenerInformacionDelCommit(numeroDeRama - 1)).gitStatus();\r\n        Nodo nodoAuxiliar = ((ListaEnlazada) ramasEnlazadas.obtenerInformacionDelCommit(numeroDeRama - 1)).primerNodo;\r\n\r\n        gitCommit(nodoAuxiliar.obtenerSiguienteNodo());\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/ListaEnlazada.java b/src/ListaEnlazada.java
+--- a/src/ListaEnlazada.java	(revision def575e22c9fc248433d2b41fff56b56957abb9c)
++++ b/src/ListaEnlazada.java	(date 1665347019427)
+@@ -1,7 +1,12 @@
++import Errores.ListaSinNodos;
++
+ public class ListaEnlazada {
+     private final String nombreDeLaRama;
+     private Nodo primerNodo;
+     private ListaEnlazada ramasEnlazadas;
++    public ListaEnlazada(String nombreDeLaRama) {
++        this.nombreDeLaRama = nombreDeLaRama;
++    }
+ 
+     public ListaEnlazada(String nombreDeLaRama, Nodo primerNodo) {
+         this.nombreDeLaRama = nombreDeLaRama;
+@@ -18,7 +23,9 @@
+                 auxiliarParaEncontrarElUltimoNodo = auxiliarParaEncontrarElUltimoNodo.obtenerSiguienteNodo();
+             }
+ 
+-            auxiliarParaEncontrarElUltimoNodo.colocarSiguienteNodo(objeto);
++            auxiliarParaEncontrarElUltimoNodo.colocarSiguienteNodo(new Nodo(objeto));
++
++            //auxiliarParaEncontrarElUltimoNodo.colocarSiguienteNodo(objeto);
+         }
+     }
+ 
+@@ -40,7 +47,11 @@
+         return primerNodo == null;
+     }
+ 
+-    public void gitStatus() {
++    public void gitStatus() throws ListaSinNodos {
++
++        if (primerNodo == null){
++            throw new ListaSinNodos("Esta rama no tiene ningun commit");
++        }
+         Nodo auxiliarParaObtenerTodosLosNodos = primerNodo;
+ 
+         System.out.println(this + ":");
+@@ -56,7 +67,6 @@
+         Codigo que usaba antes por no saber formatos XDDDDDDDDDDDDDDD
+ 
+         while (auxiliarParaObtenerTodosLosNodos != null) {
+-            System.out.printf("[%s]->",auxiliarParaObtenerTodosLosNodos.obtenerObjeto());
+             auxiliarParaPasarElContenidoDeLosNodos += auxiliarParaObtenerTodosLosNodos.obtenerObjeto().toString() + ", ";
+             auxiliarParaObtenerTodosLosNodos = auxiliarParaObtenerTodosLosNodos.obtenerSiguienteNodo();
+         }
+@@ -113,8 +123,6 @@
+             ramasEnlazadas.gitCommit(ramaAuxiliar);
+         }
+ 
+-
+-
+         /*ListaEnlazada ramaAuxiliar = new ListaEnlazada(nombreDeLaRama, auxiliarParaEncontrarElUltimoNodo.clone());
+         ramaAuxiliar.agregarRama(this);
+         ramaAuxiliar.gitCommit(objeto);
+@@ -122,7 +130,10 @@
+         this.agregarRama(ramaAuxiliar);*/
+     }
+ 
+-    private void gitBranch(ListaEnlazada listaEnlazada) {
++    public void gitBranch(ListaEnlazada listaEnlazada) {
++        listaEnlazada.gitCommit(obtenerUltimoNodo().clone());
++        listaEnlazada.colocarRamaMaestra(this);
++
+         if (ramasEnlazadas == null) {
+             ramasEnlazadas = new ListaEnlazada("Ramas de la " + this, new Nodo(listaEnlazada));
+         } else {
+@@ -130,30 +141,48 @@
+         }
+     }
+ 
+-    /*private void agregarRama(ListaEnlazada ramaNueva) {
+-        ramasEnlazadas = new ListaEnlazada(ramaNueva);
+-    }*/
++    private void colocarRamaMaestra(ListaEnlazada listaEnlazada) {
++        ramasEnlazadas = new ListaEnlazada("Ramas de la " + this, new Nodo(listaEnlazada));
++    }
++
++    private Nodo obtenerUltimoNodo() {
++        Nodo auxiliarParaEncontrarElUltimoNodo = primerNodo;
++
++        while (auxiliarParaEncontrarElUltimoNodo.obtenerSiguienteNodo() != null) {
++            auxiliarParaEncontrarElUltimoNodo = auxiliarParaEncontrarElUltimoNodo.obtenerSiguienteNodo();
++        }
++
++        return auxiliarParaEncontrarElUltimoNodo;
++    }
++
+ 
+     public ListaEnlazada gitCheckout(int numeroDeRama) {
+         System.out.println("La rama seleccionada es: " + ramasEnlazadas.obtenerInformacionDelCommit(numeroDeRama - 1));
+         return (ListaEnlazada) ramasEnlazadas.obtenerInformacionDelCommit(numeroDeRama - 1);
+     }
+ 
+-    private Object obtenerInformacionDelCommit(int posicionDelCommitEnLaRama) {
++    private Object obtenerInformacionDelCommit (int posicionDelCommitEnLaRama)throws NullPointerException {
+         Nodo auxiliarParaEncontrarNodo = primerNodo;
+         for (int i = 0; i < posicionDelCommitEnLaRama; i++) {
++            if (auxiliarParaEncontrarNodo == null){
++                throw new NullPointerException("No existe ese nodo");
++            }
+             auxiliarParaEncontrarNodo = auxiliarParaEncontrarNodo.obtenerSiguienteNodo();
+         }
+         return auxiliarParaEncontrarNodo.obtenerObjeto();
+     }
+ 
+-    public void enumerarRamas() {
++    public void enumerarRamas() throws ListaSinNodos {
++        if (ramasEnlazadas == null){
++            throw new ListaSinNodos("Esta rama no tiene otras ramas");
++        }
++
+         Nodo auxiliarParaMostrarTodasLasRamas = ramasEnlazadas.primerNodo;
+         int contador = 1;
+         System.out.println(ramasEnlazadas + ":");
+         while (auxiliarParaMostrarTodasLasRamas != null) {
+             //System.out.println("Rama #" + contador++ + ": " + ((ListaEnlazada) auxiliarParaMostrarTodasLasRamas.obtenerObjeto()).gitStatus();
+-            System.out.printf("\t#%s %s\n", contador++,auxiliarParaMostrarTodasLasRamas.obtenerObjeto());
++            System.out.printf("\tRama #%s: %s\n", contador++,auxiliarParaMostrarTodasLasRamas.obtenerObjeto());
+             //System.out.println(auxiliarParaMostrarTodasLasRamas.obtenerObjeto());
+             auxiliarParaMostrarTodasLasRamas = auxiliarParaMostrarTodasLasRamas.obtenerSiguienteNodo();
+         }
+@@ -165,7 +194,7 @@
+         return nombreDeLaRama;
+     }
+ 
+-    public void gitMerge(int numeroDeRama) {
++    public void gitMerge(int numeroDeRama) throws ListaSinNodos, NullPointerException {
+         System.out.println("La rama seleccionada es: ");
+         ((ListaEnlazada) ramasEnlazadas.obtenerInformacionDelCommit(numeroDeRama - 1)).gitStatus();
+         Nodo nodoAuxiliar = ((ListaEnlazada) ramasEnlazadas.obtenerInformacionDelCommit(numeroDeRama - 1)).primerNodo;
+Index: src/Errores/ListaSinNodos.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/Errores/ListaSinNodos.java b/src/Errores/ListaSinNodos.java
+new file mode 100644
+--- /dev/null	(date 1665336608472)
++++ b/src/Errores/ListaSinNodos.java	(date 1665336608472)
+@@ -0,0 +1,7 @@
++package Errores;
++
++public class ListaSinNodos extends Throwable {
++    public ListaSinNodos(String mensaje) {
++        super(mensaje);
++    }
++}
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"894f1662-2524-4f7a-aaae-5a96e0db6b8f\" name=\"Changes\" comment=\"Trabajo actualizado\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/ListaEnlazada.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/ListaEnlazada.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/Main.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/Main.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/Nodo.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/Nodo.java\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Class\" />\r\n        <option value=\"Enum\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"2FiZLstKHhVOQRuONxMNPJrl3Yr\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"RunOnceActivity.OpenProjectViewOnStart\": \"true\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"WebServerToolWindowFactoryState\": \"false\",\r\n    \"last_opened_file_path\": \"C:/Users/jeanp/Desktop/Universidad/Programacion_II/30DayOfCode/distribuidorDeHoras\",\r\n    \"settings.editor.selected.configurable\": \"preferences.pluginManager\"\r\n  }\r\n}]]></component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"CreateClassDialog.RecentsKey\">\r\n      <recent name=\"\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunManager\">\r\n    <configuration name=\"Main\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"Main\" />\r\n      <module name=\"listaEnlazada\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"Application.Main\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"894f1662-2524-4f7a-aaae-5a96e0db6b8f\" name=\"Changes\" comment=\"\" />\r\n      <created>1664976815015</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1664976815015</updated>\r\n      <workItem from=\"1664976817286\" duration=\"5680000\" />\r\n      <workItem from=\"1664997639046\" duration=\"8262000\" />\r\n      <workItem from=\"1665191549517\" duration=\"7598000\" />\r\n      <workItem from=\"1665282111220\" duration=\"7367000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"Trabajo\">\r\n      <created>1665195327463</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1665195327463</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"Trabajo actualizado\">\r\n      <created>1665198945893</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1665198945893</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"3\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"Trabajo\" />\r\n    <MESSAGE value=\"Trabajo actualizado\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Trabajo actualizado\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision def575e22c9fc248433d2b41fff56b56957abb9c)
++++ b/.idea/workspace.xml	(date 1665347019904)
+@@ -2,10 +2,10 @@
+ <project version="4">
+   <component name="ChangeListManager">
+     <list default="true" id="894f1662-2524-4f7a-aaae-5a96e0db6b8f" name="Changes" comment="Trabajo actualizado">
++      <change afterPath="$PROJECT_DIR$/src/Errores/ListaSinNodos.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/ListaEnlazada.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ListaEnlazada.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/Nodo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Nodo.java" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -15,8 +15,8 @@
+   <component name="FileTemplateManagerImpl">
+     <option name="RECENT_TEMPLATES">
+       <list>
+-        <option value="Class" />
+         <option value="Enum" />
++        <option value="Class" />
+       </list>
+     </option>
+   </component>
+@@ -37,12 +37,13 @@
+     "RunOnceActivity.OpenProjectViewOnStart": "true",
+     "RunOnceActivity.ShowReadmeOnStart": "true",
+     "WebServerToolWindowFactoryState": "false",
+-    "last_opened_file_path": "C:/Users/jeanp/Desktop/Universidad/Programacion_II/30DayOfCode/distribuidorDeHoras",
++    "last_opened_file_path": "C:/Users/jeanp/Desktop/Jean Pierre Cotera Alcivar/2DO semestre/Programacion_II/ProyGUI",
+     "settings.editor.selected.configurable": "preferences.pluginManager"
+   }
+ }]]></component>
+   <component name="RecentsManager">
+     <key name="CreateClassDialog.RecentsKey">
++      <recent name="Errores" />
+       <recent name="" />
+     </key>
+   </component>
+@@ -71,7 +72,8 @@
+       <workItem from="1664976817286" duration="5680000" />
+       <workItem from="1664997639046" duration="8262000" />
+       <workItem from="1665191549517" duration="7598000" />
+-      <workItem from="1665282111220" duration="7367000" />
++      <workItem from="1665282111220" duration="8053000" />
++      <workItem from="1665332716870" duration="6625000" />
+     </task>
+     <task id="LOCAL-00001" summary="Trabajo">
+       <created>1665195327463</created>
+@@ -87,7 +89,14 @@
+       <option name="project" value="LOCAL" />
+       <updated>1665198945893</updated>
+     </task>
+-    <option name="localTasksCounter" value="3" />
++    <task id="LOCAL-00003" summary="Trabajo actualizado">
++      <created>1665290455130</created>
++      <option name="number" value="00003" />
++      <option name="presentableId" value="LOCAL-00003" />
++      <option name="project" value="LOCAL" />
++      <updated>1665290455130</updated>
++    </task>
++    <option name="localTasksCounter" value="4" />
+     <servers />
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">
