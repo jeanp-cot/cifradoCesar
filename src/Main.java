@@ -11,7 +11,7 @@ public class Main {
     }
 
     private static String descifrarMensaje(String mensajeCifrado, int posicionesQueSeDesplaza) {
-        String aux = caracteres.substring(posicionesQueSeDesplaza) + caracteres.substring(0, posicionesQueSeDesplaza);
+        String caracteresDesplazados = caracteres.substring(posicionesQueSeDesplaza) + caracteres.substring(0, posicionesQueSeDesplaza);
         mensajeCifrado = mensajeCifrado.toLowerCase();
         String mensajeDescifrado = "";
         for (int i =0; i<mensajeCifrado.length();i++){
@@ -19,14 +19,14 @@ public class Main {
                 mensajeDescifrado += ' ';
                 continue;
             }
-            mensajeDescifrado += caracteres.charAt(aux.indexOf(mensajeCifrado.charAt(i)));
+            mensajeDescifrado += caracteres.charAt(caracteresDesplazados.indexOf(mensajeCifrado.charAt(i)));
         }
 
         return mensajeDescifrado;
     }
 
     private static String cifrarCadenaConCifradoCesar(String mensaje, int posicionesQueSeDesplaza) {
-        String aux = caracteres.substring(posicionesQueSeDesplaza) + caracteres.substring(0, posicionesQueSeDesplaza);
+        String caracteresDesplazados = caracteres.substring(posicionesQueSeDesplaza) + caracteres.substring(0, posicionesQueSeDesplaza);
         mensaje = mensaje.toLowerCase();
         String mensajeCifrado = "";
         for (int i =0; i<mensaje.length();i++){
@@ -34,7 +34,7 @@ public class Main {
                 mensajeCifrado += ' ';
                 continue;
             }
-            mensajeCifrado += aux.charAt(caracteres.indexOf(mensaje.charAt(i)));
+            mensajeCifrado += caracteresDesplazados.charAt(caracteres.indexOf(mensaje.charAt(i)));
         }
 
         return mensajeCifrado;
