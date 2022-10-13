@@ -4,8 +4,11 @@ Ejercicio #13 del #30DaysOfCodeByAEIS
 Lenguaje: Java
 
 Objetivo: 
+
 •	🧑‍💻👩‍💻Programa un bloque o función que reciba como parámetro una cadena de texto y un número que indique cuántas posiciones se tiene que desplazar desde la posición original.
+
 •	🧑‍💻👩‍💻Programa un bloque o función que reciba como parámetro una cadena cifrada y un número n, con la finalidad de que se puede la cadena Original
+
 •	[OPCIONAL] En este caso el cifrado para los anteriores problemas es únicamente para el alfabeto, que pasa si un usuario quiere añadir números y caracteres especiales en un orden dado, ¿Cómo solucionarías el problema?, Pon un ejemplo haga uso de números y caracteres especiales.
 
 Primero ingresé todos los caracteres que se iban a usar en una variable ya sean letras, números, caracteres especiales o lo que sea. En las funciones para cifrar y descifrar usé un auxiliar para desplazar los caracteres. Los desplazaba de la siguiente manera:
