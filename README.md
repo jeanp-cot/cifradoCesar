@@ -1,20 +1,14 @@
 # sistemaGIT
-Ejercicio #10 del #30DaysOfCodeByAEIS
+Ejercicio #13 del #30DaysOfCodeByAEIS
 
 Lenguaje: Java
 
 Objetivo: 
-1.  Implementar los siguientes metodos:
-  - git commint: Este comando nos permite añadir un elemento a la lista de nuestro repositorio.
-  - git branch: Crear una rama
-  - git checkout: Cambiar de una rama a otra
-  - git status: Mostrar la informacion de los nodos
-  - git revert: Deshace los cambios efectuados en el ultimo nodo
-2.	Consulta sobre git e implementa un comando nuevo, explícanos el funcionamiento en git y el funcionamiento en tu código.
-  - git merge: Fusiona una rama dentro de la rama que tienes activa
-3.	Opcional: si manejas git sabrás que estos comandos al ejecutarlos muestran una salida, de ser posible, implementa esta salida cada que ejecutes tu comando
+•	🧑‍💻👩‍💻Programa un bloque o función que reciba como parámetro una cadena de texto y un número que indique cuántas posiciones se tiene que desplazar desde la posición original.
+•	🧑‍💻👩‍💻Programa un bloque o función que reciba como parámetro una cadena cifrada y un número n, con la finalidad de que se puede la cadena Original
+•	[OPCIONAL] En este caso el cifrado para los anteriores problemas es únicamente para el alfabeto, que pasa si un usuario quiere añadir números y caracteres especiales en un orden dado, ¿Cómo solucionarías el problema?, Pon un ejemplo haga uso de números y caracteres especiales.
 
-Usé las funciones creadas el dia #9, para guardar las ramas creadas utilicé una ListaEnlazada esto me servía para luego enumerarlas y seleccionar la que quisiera al momento de hacer el merge o checkout (tambien pudo haber servido para borrar las ramas). 
-El merge fue el comando nuevo que implementé.
+Primero ingresé todos los caracteres que se iban a usar en una variable ya sean letras, números, caracteres especiales o lo que sea. En las funciones para cifrar y descifrar usé un auxiliar para desplazar los caracteres. Los desplazaba de la siguiente manera:
+La variable donde se encuentran todos los caracteres la dividia en 2 partes, la primera parte iba desde el inicio de la cadena hasta el numero de espacios a desplazar y la segunda todo lo que sobrara. Luego para desplazarlos agarraba la segunda parte y la ponia de primero en la variable auxiliar, para luego agregar la primera parte al final.
 
-También tuve que crear un metodo que pudiera regresarme un nodo en concreto de la ListaEnlazada.
+Use un for para leer cada caracter del mensaje, para saber que caracter era usé charAt() y para saber su indice usé indexOf(). Le decía al programa dame el índice de esta letra en la lista de caracteres, luego regresame la letra que se encuentra en ese indicie en la variable auxiliar donde estan los caracteres desplazados. Así cifré el mensaje y para descifrarlo solo era el proceso inverso.
